@@ -1,104 +1,43 @@
+Wed Jul 20 23:49:27 2022
 try to make a daemond
+Wed Jul 20 23:49:27 2022
 Daemon server started.
-bind error
-RobinHood accepting. socket is active.
-file accepted. socket is free.
+Wed Jul 20 23:50:49 2022
 SIGTERM accepted
-try to make a daemond
+Wed Jul 20 23:50:57 2022
+try to make a daemonds
+Wed Jul 20 23:50:57 2022
 Daemon server started.
-RobinHood accepting. socket is active.
+Wed Jul 20 23:51:07 2022
 SIGTERM accepted
+Wed Jul 20 23:57:52 2022
 try to make a daemond
+Wed Jul 20 23:57:52 2022
 Daemon server started.
-bind error
+Wed Jul 20 23:58:04 2022
 try to make a daemond
+Wed Jul 20 23:58:04 2022
 Daemon server started.
-bind error
-try to make a daemond
-Daemon server started.
+Wed Jul 20 23:58:04 2022
+ERROR: bind error!
+Wed Jul 20 23:58:09 2022
 SIGTERM accepted
+Wed Jul 20 23:58:19 2022
 try to make a daemond
+Wed Jul 20 23:58:19 2022
 Daemon server started.
-RobinHood accepting. socket is active.
-file accepted. socket is free.
+Wed Jul 20 23:58:33 2022
+1 socket is active. accepting f1 file
+
+Wed Jul 20 23:58:37 2022
+file accepted. socket 1is free.
+Wed Jul 20 23:59:43 2022
 SIGTERM accepted
+Thu Jul 21 00:03:31 2022
 try to make a daemond
+Thu Jul 21 00:03:31 2022
 Daemon server started.
-RobinHood accepting. socket is active.
-Успешноfile accepted. socket is free.
-УспешноSIGTERM accepted
-try to make a daemond
-Daemon server started.
-RobinHood accepting. socket is active.
-file accepted. socket is free.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
-1 accepting. socket is active.
-3 accepting. socket is active.
-2 accepting. socket is active.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
-2 accepting. socket is active.
-3 accepting. socket is active.
-file accepted. socket is free.
-1 accepting. socket is active.
-file accepted. socket is free.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
-1 accepting. socket is active.
-3 accepting. socket is active.
-2 accepting. socket is active.
-SIGTERM accepted
-file accepted. socket is free.
-file accepted. socket is free.
-file accepted. socket is free.
-try to make a daemond
-Daemon server started.
-2 accepting. socket is active.
-3 accepting. socket is active.
-1 accepting. socket is active.
-SIGTERM accepted
-file accepted. socket is free.
-file accepted. socket is free.
-file accepted. socket is free.
-try to make a daemond
-Daemon server started.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
-1 socket is active. accepting 2file accepted. socket is free.
-2 socket is active. accepting 11 socket is active. accepting 34 socket is active. accepting 2file accepted. socket is free.
-file accepted. socket is free.
-file accepted. socket is free.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
+Thu Jul 21 00:03:44 2022
 1 socket is active. accepting 1 file
-2 socket is active. accepting 3 file
-4 socket is active. accepting 2 file
-file accepted. socket is free.
-file accepted. socket is free.
-file accepted. socket is free.
-SIGTERM accepted
-try to make a daemond
-Daemon server started.
-Wed Jul 20 21:15:54 2022
-SIGTERM accepted
-Wed Jul 20 21:18:36 2022
-try to make a daemond
-Daemon server started.
-Wed Jul 20 21:18:59 2022
-1 socket is active. accepting RobinHood file
-Wed Jul 20 21:18:59 2022
-file accepted. socket is free.
-Wed Jul 20 21:19:09 2022
-SIGTERM accepted
-Wed Jul 20 21:20:05 2022
-try to make a daemond
-Wed Jul 20 21:20:05 2022
-Daemon server started.
-Wed Jul 20 21:20:16 2022
-SIGTERM accepted
+Thu Jul 21 00:03:47 2022
+file accepted. socket 1is free.

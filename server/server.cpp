@@ -28,40 +28,38 @@ int Daemon(int, char **);
 pthread_t thread[10];
 int listener;
 
+void toLog(std::string message) {
+
+  FILE *lg;
+  lg = fopen("server.log", "a");
+  time_t seconds = time(NULL);
+  tm *timeinfo = localtime(&seconds);
+  fprintf(lg, "%s", asctime(timeinfo));
+  fprintf(lg, "%s", message.c_str());
+  fprintf(lg, "%s", "\n");
+  fclose(lg);
+}
+
 void handler(int i) {
   FILE *lg;
   switch (i) {
   case SIGTERM: {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "SIGTERM accepted\n");
-    fclose(lg);
+
+    toLog("SIGTERM accepted");
     close(listener);
     for (int i = 0; i < 10; i++)
       pthread_join(thread[i], NULL);
     exit(EXIT_SUCCESS);
   }
   case SIGHUP: {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "SIGHUP accepted\n");
-    fclose(lg);
+
+    toLog("SIGHUP accepted");
+    for (int i = 0; i < 10; i++)
+      pthread_join(thread[i], NULL);
     exit(EXIT_SUCCESS);
   }
   default: {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "unknown signal");
-    fprintf(lg, "%d", i);
-    fprintf(lg, "%s", "\n");
-
-    fclose(lg);
+    toLog("signal "+ std::to_string(i)+"accepted");
     exit(i);
   }
   }
@@ -86,33 +84,18 @@ int main(int argc, char *argv[]) {
   //Начало демонизации
   pid = fork();
   if (pid < 0) {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "fork error!\n");
-    fclose(lg);
-    perror("fork error!");
+    toLog("ERROR: fork error!");
+    perror("fork");
     exit(1);
   } else if (pid > 0) {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "try to make a daemond\n");
-    fclose(lg);
+    toLog("try to make a daemond");
     exit(0);
   }
   setsid();
 
   char szPath[MESSAGE_MEMORY];
   if (getcwd(szPath, sizeof(szPath)) == NULL) {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "dir error!\n");
-    fclose(lg);
+    toLog("ERROR: dir error!");
     exit(1);
   } else {
     chdir(szPath);
@@ -146,15 +129,11 @@ void *thread_func(void *arg) {
   str += buf;
   fp = fopen(str.c_str(), "w");
 
-  lg = fopen("server.log", "a");
-  time_t seconds = time(NULL);
-  tm *timeinfo = localtime(&seconds);
-  fprintf(lg, "%s", asctime(timeinfo));
-  str = std::to_string(sockid) + " socket is active. accepting ";
-  str += buf;
-  str += " file\n";
-  fprintf(lg, "%s", str.c_str());
-  fclose(lg);
+  //lg = fopen("server.log", "a");
+  // str = std::to_string(sockid) + " socket is active. accepting ";
+  // str += buf;
+  // str += " file";
+  toLog(std::to_string(sockid) + " socket is active. accepting "+buf+" file");
   send(sockid, buf, bytes_read, 0);
 
   while (1) {
@@ -168,14 +147,7 @@ void *thread_func(void *arg) {
     }
   }
   fclose(fp);
-
-  lg = fopen("server.log", "a");
-  seconds = time(NULL);
-  timeinfo = localtime(&seconds);
-  fprintf(lg, "%s", asctime(timeinfo));
-  fprintf(lg, "%s", "file accepted. socket is free.\n");
-  fclose(lg);
-
+  toLog("file accepted. socket "+ std::to_string(sockid)+"is free.");
   close(sockid);
   return arg;
 }
@@ -185,19 +157,11 @@ int Daemon(int argc, char *argv[]) {
   int i = 0;
   int sock;
   struct sockaddr_in addr;
-  FILE *lg;
 
-  lg = fopen("server.log", "a");
-  time_t seconds = time(NULL);
-  tm *timeinfo = localtime(&seconds);
-  fprintf(lg, "%s", asctime(timeinfo));
-  fprintf(lg, "%s", "Daemon server started.\n");
-  fclose(lg);
+  toLog("Daemon server started.");
   listener = socket(AF_INET, SOCK_STREAM, 0);
   if (listener < 0) {
-    lg = fopen("server.log", "a");
-    fprintf(lg, "%s", "socket error!\n");
-    fclose(lg);
+  toLog("ERROR: socket error!");
     perror("socket");
     exit(1);
   }
@@ -205,12 +169,8 @@ int Daemon(int argc, char *argv[]) {
   addr.sin_port = htons(SERVER_PORT);
   addr.sin_addr.s_addr = inet_addr(SERVER_ADRESS);
   if (bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
-    lg = fopen("server.log", "a");
-    time_t seconds = time(NULL);
-    tm *timeinfo = localtime(&seconds);
-    fprintf(lg, "%s", asctime(timeinfo));
-    fprintf(lg, "%s", "bind error\n");
-    fclose(lg);
+
+  toLog("ERROR: bind error!");
     perror("bind");
     exit(2);
   }
@@ -222,12 +182,8 @@ int Daemon(int argc, char *argv[]) {
     sock = accept(listener, NULL, NULL);
 
     if (sock < 0) {
-      lg = fopen("server.log", "a");
-      time_t seconds = time(NULL);
-      tm *timeinfo = localtime(&seconds);
-      fprintf(lg, "%s", asctime(timeinfo));
-      fprintf(lg, "%s", "accept socket error!\n");
-      fclose(lg);
+
+  toLog("ERROR: accept socket error!");
       perror("accept");
       exit(3);
     }
