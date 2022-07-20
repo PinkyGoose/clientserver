@@ -1,24 +1,13 @@
 #include <arpa/inet.h>
-#include <ctime>
-#include <errno.h>
-#include <fcntl.h>
-#include <iostream>
+#include <csignal>
 #include <netinet/in.h>
-#include <pthread.h>
-#include <resolv.h>
-#include <signal.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
 #include <string>
 #include <sys/socket.h>
 #include <sys/stat.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/un.h>
 #include <sys/wait.h>
-#include <syslog.h>
 #include <unistd.h>
+
+
 #define SERVER_ADRESS "127.0.0.1"
 #define SERVER_PORT 5002
 #define MESSAGE_MEMORY 1024

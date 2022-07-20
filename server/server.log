@@ -41,3 +41,33 @@ Thu Jul 21 00:03:44 2022
 1 socket is active. accepting 1 file
 Thu Jul 21 00:03:47 2022
 file accepted. socket 1is free.
+Thu Jul 21 00:29:41 2022
+try to make a daemond
+Thu Jul 21 00:29:41 2022
+Daemon server started.
+Thu Jul 21 00:29:50 2022
+1 socket is active. accepting 1 file
+Thu Jul 21 00:29:54 2022
+file accepted. socket 1is free.
+Thu Jul 21 00:29:57 2022
+2 socket is active. accepting 3 file
+Thu Jul 21 00:30:01 2022
+file accepted. socket 2is free.
+Thu Jul 21 00:30:03 2022
+1 socket is active. accepting 2 file
+Thu Jul 21 00:30:08 2022
+file accepted. socket 1is free.
+Thu Jul 21 00:30:44 2022
+2 socket is active. accepting 3 file
+Thu Jul 21 00:30:45 2022
+1 socket is active. accepting 2 file
+Thu Jul 21 00:30:45 2022
+4 socket is active. accepting 1 file
+Thu Jul 21 00:30:49 2022
+file accepted. socket 1is free.
+Thu Jul 21 00:30:49 2022
+file accepted. socket 2is free.
+Thu Jul 21 00:30:50 2022
+file accepted. socket 4is free.
+Thu Jul 21 00:30:58 2022
+SIGTERM accepted
