@@ -83,3 +83,22 @@ file accepted. socket is free.
 file accepted. socket is free.
 file accepted. socket is free.
 SIGTERM accepted
+try to make a daemond
+Daemon server started.
+Wed Jul 20 21:15:54 2022
+SIGTERM accepted
+Wed Jul 20 21:18:36 2022
+try to make a daemond
+Daemon server started.
+Wed Jul 20 21:18:59 2022
+1 socket is active. accepting RobinHood file
+Wed Jul 20 21:18:59 2022
+file accepted. socket is free.
+Wed Jul 20 21:19:09 2022
+SIGTERM accepted
+Wed Jul 20 21:20:05 2022
+try to make a daemond
+Wed Jul 20 21:20:05 2022
+Daemon server started.
+Wed Jul 20 21:20:16 2022
+SIGTERM accepted

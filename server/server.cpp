@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <ctime>
 #include <errno.h>
 #include <fcntl.h>
 #include <iostream>
@@ -32,6 +33,9 @@ void handler(int i) {
   switch (i) {
   case SIGTERM: {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "SIGTERM accepted\n");
     fclose(lg);
     close(listener);
@@ -41,12 +45,18 @@ void handler(int i) {
   }
   case SIGHUP: {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "SIGHUP accepted\n");
     fclose(lg);
     exit(EXIT_SUCCESS);
   }
   default: {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "unknown signal");
     fprintf(lg, "%d", i);
     fprintf(lg, "%s", "\n");
@@ -73,17 +83,22 @@ int main(int argc, char *argv[]) {
   signal(SIGHUP, handler);
   signal(SIGTERM, handler);
 
-
   //Начало демонизации
   pid = fork();
   if (pid < 0) {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "fork error!\n");
     fclose(lg);
     perror("fork error!");
     exit(1);
   } else if (pid > 0) {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "try to make a daemond\n");
     fclose(lg);
     exit(0);
@@ -93,6 +108,9 @@ int main(int argc, char *argv[]) {
   char szPath[MESSAGE_MEMORY];
   if (getcwd(szPath, sizeof(szPath)) == NULL) {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "dir error!\n");
     fclose(lg);
     exit(1);
@@ -104,22 +122,20 @@ int main(int argc, char *argv[]) {
   for (i = 0; i < 3; ++i) {
     close(i);
   }
-//конец демонизации
+  //конец демонизации
   signal(SIGCHLD, SIG_IGN);
   return Daemon(argc, argv);
   return 0;
 }
 
 void *thread_func(void *arg) {
-//Поток, в котором обрабатываются сообщения определенного сокета
+  //Поток, в котором обрабатываются сообщения определенного сокета
   int bytes_read;
   char buf[MESSAGE_MEMORY];
   FILE *fp, *lg;
   int sockid = *(int *)arg;
 
-  bytes_read = recv(sockid, buf, MESSAGE_MEMORY, 0);//получаем название файла
-
-
+  bytes_read = recv(sockid, buf, MESSAGE_MEMORY, 0); //получаем название файла
 
   if (bytes_read <= 0) {
     close(sockid);
@@ -131,15 +147,15 @@ void *thread_func(void *arg) {
   fp = fopen(str.c_str(), "w");
 
   lg = fopen("server.log", "a");
+  time_t seconds = time(NULL);
+  tm *timeinfo = localtime(&seconds);
+  fprintf(lg, "%s", asctime(timeinfo));
   str = std::to_string(sockid) + " socket is active. accepting ";
   str += buf;
   str += " file\n";
   fprintf(lg, "%s", str.c_str());
   fclose(lg);
   send(sockid, buf, bytes_read, 0);
-
-
-
 
   while (1) {
     bytes_read = recv(sockid, buf, MESSAGE_MEMORY, 0);
@@ -153,9 +169,10 @@ void *thread_func(void *arg) {
   }
   fclose(fp);
 
-
-
   lg = fopen("server.log", "a");
+  seconds = time(NULL);
+  timeinfo = localtime(&seconds);
+  fprintf(lg, "%s", asctime(timeinfo));
   fprintf(lg, "%s", "file accepted. socket is free.\n");
   fclose(lg);
 
@@ -170,9 +187,10 @@ int Daemon(int argc, char *argv[]) {
   struct sockaddr_in addr;
   FILE *lg;
 
-  
-
   lg = fopen("server.log", "a");
+  time_t seconds = time(NULL);
+  tm *timeinfo = localtime(&seconds);
+  fprintf(lg, "%s", asctime(timeinfo));
   fprintf(lg, "%s", "Daemon server started.\n");
   fclose(lg);
   listener = socket(AF_INET, SOCK_STREAM, 0);
@@ -188,6 +206,9 @@ int Daemon(int argc, char *argv[]) {
   addr.sin_addr.s_addr = inet_addr(SERVER_ADRESS);
   if (bind(listener, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
     lg = fopen("server.log", "a");
+    time_t seconds = time(NULL);
+    tm *timeinfo = localtime(&seconds);
+    fprintf(lg, "%s", asctime(timeinfo));
     fprintf(lg, "%s", "bind error\n");
     fclose(lg);
     perror("bind");
@@ -196,14 +217,15 @@ int Daemon(int argc, char *argv[]) {
   listen(listener, 1);
   bool flag = 0;
 
-
-
-//Блок обработки входящих сообщений. Распределяет нагрузку между 10 потоками
+  //Блок обработки входящих сообщений. Распределяет нагрузку между 10 потоками
   while (1) {
     sock = accept(listener, NULL, NULL);
 
     if (sock < 0) {
       lg = fopen("server.log", "a");
+      time_t seconds = time(NULL);
+      tm *timeinfo = localtime(&seconds);
+      fprintf(lg, "%s", asctime(timeinfo));
       fprintf(lg, "%s", "accept socket error!\n");
       fclose(lg);
       perror("accept");
