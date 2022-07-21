@@ -45,8 +45,7 @@ int main(int argc, char *argv[])
     {
         if (fgets(str, MESSAGE_MEMORY, fp))
             char buf[sizeof(str)];
-        if (feof(fp))
-            break;
+
         send(sock, str, sizeof(str), 0);
         recv(sock, buf, sizeof(str), 0);
     }
